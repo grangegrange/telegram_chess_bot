@@ -2,6 +2,7 @@ const piecesPositions = require('../constants/piecesPositions')
 
 
 const evaluateBoard = (board) => {
+    // console.log('evaluateBoard:', board)
     let totalEvaluation = 0
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
@@ -91,4 +92,5 @@ const minimaxRoot = (depth, game, isMaximisingPlayer) => {
 }
 
 
+module.exports.evaluateBoard = evaluateBoard
 module.exports.minimaxRoot = minimaxRoot
