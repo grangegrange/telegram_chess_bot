@@ -1,8 +1,16 @@
 {
   "name": "tg-chess-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple chess telegram bot with Node.js",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grangegrange/telegram_chess_bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/grangegrange/telegram_chess_bot/issues"
+  },
+  "homepage": "https://github.com/grangegrange/telegram_chess_bot#readme",
   "engines": {
     "node": "12.1.0"
   },
