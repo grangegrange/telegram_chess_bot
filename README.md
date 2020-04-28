@@ -19,7 +19,7 @@ d2-d4
 ```
 
 ## Live demo:  
-[@chess_zugzwang_bot](t.me/chess_zugzwang_bot)
+[@chess_zugzwang_bot](https://t.me/chess_zugzwang_bot)
 
 ## Используемые библиотеки:  
 * [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api)
