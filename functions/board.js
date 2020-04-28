@@ -30,7 +30,7 @@ const drawImageCanvas = (gameBoard) => {
         const piece = gameBoard[y][x]
         if (piece !== null) {
             img.src = `./imgs/${piece.color}${piece.type.toUpperCase()}.svg`
-            context.drawImage(img, x * squareWidth, y * squareWidth, 50, 50)
+            context.drawImage(img, x * squareWidth, y * squareWidth, squareWidth, squareWidth)
         }
 
     }
