@@ -1,5 +1,6 @@
 const { Image, createCanvas } = require('canvas')
 
+
 const drawImageCanvas = (gameBoard) => {
 
     const canvas = createCanvas(400, 400)
@@ -40,10 +41,4 @@ const drawImageCanvas = (gameBoard) => {
 }
 
 
-const reverseArray = (array) => {
-    return array.slice().reverse()
-}
-
-
 module.exports.drawImageCanvas = drawImageCanvas
-module.exports.reverseArray = reverseArray
