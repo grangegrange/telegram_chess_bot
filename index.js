@@ -31,15 +31,14 @@ const finishGame = (game, chatId, botMove) => {
     if (game.in_threefold_repetition()) {
         bot.sendMessage(chatId, "Повтор трех ходов")
     }
-    bot.sendMessage(chatId, "Игра закончена. Еще?", {
+    bot.sendMessage(chatId, "Партия закончена", {
         "reply_markup": {
             "keyboard": [
-                ["Играем"]
+                [COMMANDS.CHESS_START]
             ]
         }
     })
     chessPlaying = false
-    game.reset()
 }
 
 
@@ -52,7 +51,7 @@ bot.on('message', (msg) => {
             bot.sendMessage(msg.chat.id, "Шахматы?", {
                 "reply_markup": {
                     "keyboard": [
-                        ["Играем"]
+                        [COMMANDS.CHESS_START]
                     ]
                 }
             })
@@ -64,11 +63,11 @@ bot.on('message', (msg) => {
             bot.sendMessage(msg.chat.id, "Ну-ка посмотрим. Ходы в нотации e2-e4, f2-f3", {
                 "reply_markup": {
                     "keyboard": [
-                        ["Закончить игру"]
+                        [COMMANDS.CHESS_STOP]
                     ]
                 }
             })
-            bot.sendMessage(msg.chat.id, "Начинаем игру!")
+            bot.sendMessage(msg.chat.id, "Начинаем партию")
             const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
             bot.sendPhoto(msg.chat.id, boardImage)
         }
@@ -90,6 +89,7 @@ bot.on('message', (msg) => {
                 finishGame(chessGame, msg.chat.id, false)
                 const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
                 bot.sendPhoto(msg.chat.id, boardImage)
+                game.reset()
             }
             // IF BOT CAN MOVE
             else {
@@ -98,12 +98,14 @@ bot.on('message', (msg) => {
                 if (chessGame.in_check() && !chessGame.game_over()) {
                     bot.sendMessage(msg.chat.id, "Шах!")
                 }
+                const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
+                bot.sendPhoto(msg.chat.id, boardImage)
                 // IF BOT HAS FINISHED THE GAME
                 if (chessGame.game_over()) {
                     finishGame(chessGame, msg.chat.id, true)
+                    game.reset()
                 }
-                const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
-                bot.sendPhoto(msg.chat.id, boardImage)
+
             }
 
         }
