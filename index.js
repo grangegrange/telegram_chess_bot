@@ -19,7 +19,6 @@ let chessGame = {}
 
 
 const finishGame = (game, chatId, botMove) => {
-    chessPlaying = false
     if (game.in_checkmate()) {
         botMove ? bot.sendMessage(chatId, "Вы проиграли!") : bot.sendMessage(chatId, "Вы выиграли!")
     }
@@ -39,6 +38,8 @@ const finishGame = (game, chatId, botMove) => {
             ]
         }
     })
+    chessPlaying = false
+    game.reset()
 }
 
 
@@ -60,7 +61,7 @@ bot.on('message', (msg) => {
         if (msg.text === COMMANDS.CHESS_START) {
             chessPlaying = true
             chessGame = new Chess()
-            bot.sendMessage(msg.chat.id, "Ну-ка посмотрим", {
+            bot.sendMessage(msg.chat.id, "Ну-ка посмотрим. Ходы в нотации e2-e4, f2-f3", {
                 "reply_markup": {
                     "keyboard": [
                         ["Закончить игру"]
@@ -78,7 +79,7 @@ bot.on('message', (msg) => {
     else if (chessPlaying && utils.isChessCommand(msg.text)) {
 
         const fenBeforeMove = chessGame.fen()
-        chessGame.move(msg.text, {sloppy: true})
+        chessGame.move(msg.text.toLowerCase(), {sloppy: true})
         const fenAfterMove = chessGame.fen()
 
         // IF USER MOVE IS POSSIBLE
@@ -90,6 +91,7 @@ bot.on('message', (msg) => {
                 const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
                 bot.sendPhoto(msg.chat.id, boardImage)
             }
+            // IF BOT CAN MOVE
             else {
                 const botMove = movesFunctions.minimaxRoot(PARAMS.depth, chessGame, true)
                 chessGame.move(botMove, {sloppy: true})
@@ -113,8 +115,7 @@ bot.on('message', (msg) => {
     }
 
     // STOP PLAYING
-    else if (chessPlaying && msg.text === COMMANDS.CHESS_STOP) {
-        chessPlaying = false;
+    else if (msg.text === COMMANDS.CHESS_STOP) {
         finishGame(chessGame, msg.chat.id, null)
     }
 

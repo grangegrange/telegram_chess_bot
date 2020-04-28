@@ -7,12 +7,13 @@ const reverseArray = (array) => {
 
 
 const isChessCommand = (message) => {
-    if (message.length === 5 &&
-        params.chessLetters.indexOf(message[0]) >= 0 &&
-        message[1] >= 1 && message[1] <= 8 &&
-        message[2] === '-' &&
-        params.chessLetters.indexOf(message[3]) >= 0 &&
-        message[4] >= 1 && message[4] <= 8
+    const msg = message.toLowerCase()
+    if (msg.length === 5 &&
+        params.chessLetters.indexOf(msg[0]) >= 0 &&
+        msg[1] >= 1 && msg[1] <= 8 &&
+        msg[2] === '-' &&
+        params.chessLetters.indexOf(msg[3]) >= 0 &&
+        msg[4] >= 1 && msg[4] <= 8
     ) {
         return true
     }
