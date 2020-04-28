@@ -17,7 +17,7 @@ const drawImageCanvas = (gameBoard) => {
 
     for (i = 0; i < totalSquares; i++) {
         x++
-        if (i % boardSize == 0) {
+        if (i % boardSize === 0) {
             y++
             x = 0
         }
@@ -35,8 +35,7 @@ const drawImageCanvas = (gameBoard) => {
 
     }
 
-    const boardBuffer = Buffer.from(canvas.toDataURL().slice(22), "base64")
-    return boardBuffer
+    return Buffer.from(canvas.toDataURL().slice(22), "base64")
 
 }
 

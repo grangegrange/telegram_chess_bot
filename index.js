@@ -14,7 +14,7 @@ const movesFunctions = require('./functions/moves')
 const utils = require('./functions/utils')
 
 // STATE
-let chessPlaying = false
+let chessPlaying = {}
 let chessGame = {}
 
 
@@ -38,14 +38,18 @@ const finishGame = (game, chatId, botMove) => {
             ]
         }
     })
-    chessPlaying = false
+    chessPlaying[chatId] = false
 }
 
 
 bot.on('message', (msg) => {
 
+    if (!chessGame[msg.chat.id]) {
+        chessGame[msg.chat.id] = {}
+    }
+
     // NOT PLAYING & IN COMMANDS LIST
-    if (!chessPlaying && Object.values(COMMANDS).indexOf(msg.text) !== -1) {
+    if (!chessPlaying[msg.chat.id] && Object.values(COMMANDS).indexOf(msg.text) !== -1) {
 
         if (msg.text === COMMANDS.BOT_START) {
             bot.sendMessage(msg.chat.id, "Шахматы?", {
@@ -58,8 +62,9 @@ bot.on('message', (msg) => {
         }
 
         if (msg.text === COMMANDS.CHESS_START) {
-            chessPlaying = true
-            chessGame = new Chess()
+            chessPlaying[msg.chat.id] = true
+            // chessPlaying = true
+            chessGame[msg.chat.id] = new Chess()
             bot.sendMessage(msg.chat.id, "Ну-ка посмотрим. Ходы в нотации e2-e4, f2-f3", {
                 "reply_markup": {
                     "keyboard": [
@@ -68,41 +73,41 @@ bot.on('message', (msg) => {
                 }
             })
             bot.sendMessage(msg.chat.id, "Начинаем партию")
-            const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
+            const boardImage = boardFunctions.drawImageCanvas(chessGame[msg.chat.id].board())
             bot.sendPhoto(msg.chat.id, boardImage)
         }
 
     }
 
     // CHESS COMMAND
-    else if (chessPlaying && utils.isChessCommand(msg.text)) {
+    else if (chessPlaying[msg.chat.id] && utils.isChessCommand(msg.text)) {
 
-        const fenBeforeMove = chessGame.fen()
-        chessGame.move(msg.text.toLowerCase(), {sloppy: true})
-        const fenAfterMove = chessGame.fen()
+        const fenBeforeMove = chessGame[msg.chat.id].fen()
+        chessGame[msg.chat.id].move(msg.text.toLowerCase(), {sloppy: true})
+        const fenAfterMove = chessGame[msg.chat.id].fen()
 
         // IF USER MOVE IS POSSIBLE
         if (fenBeforeMove !== fenAfterMove) {
 
             // IF USER HAS FINISHED THE GAME
-            if (chessGame.game_over()) {
-                finishGame(chessGame, msg.chat.id, false)
-                const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
+            if (chessGame[msg.chat.id].game_over()) {
+                finishGame(chessGame[msg.chat.id], msg.chat.id, false)
+                const boardImage = boardFunctions.drawImageCanvas(chessGame[msg.chat.id].board())
                 bot.sendPhoto(msg.chat.id, boardImage)
                 game.reset()
             }
             // IF BOT CAN MOVE
             else {
-                const botMove = movesFunctions.minimaxRoot(PARAMS.depth, chessGame, true)
-                chessGame.move(botMove, {sloppy: true})
-                if (chessGame.in_check() && !chessGame.game_over()) {
+                const botMove = movesFunctions.minimaxRoot(PARAMS.depth, chessGame[msg.chat.id], true)
+                chessGame[msg.chat.id].move(botMove, {sloppy: true})
+                if (chessGame[msg.chat.id].in_check() && !chessGame[msg.chat.id].game_over()) {
                     bot.sendMessage(msg.chat.id, "Шах!")
                 }
-                const boardImage = boardFunctions.drawImageCanvas(chessGame.board())
+                const boardImage = boardFunctions.drawImageCanvas(chessGame[msg.chat.id].board())
                 bot.sendPhoto(msg.chat.id, boardImage)
                 // IF BOT HAS FINISHED THE GAME
-                if (chessGame.game_over()) {
-                    finishGame(chessGame, msg.chat.id, true)
+                if (chessGame[msg.chat.id].game_over()) {
+                    finishGame(chessGame[msg.chat.id], msg.chat.id, true)
                     game.reset()
                 }
 
@@ -118,7 +123,7 @@ bot.on('message', (msg) => {
 
     // STOP PLAYING
     else if (msg.text === COMMANDS.CHESS_STOP) {
-        finishGame(chessGame, msg.chat.id, null)
+        finishGame(chessGame[msg.chat.id], msg.chat.id, null)
     }
 
     // NOT A COMMAND
