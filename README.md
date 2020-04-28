@@ -4,7 +4,6 @@
   
 Игра заканчивается в случае мата, ничьи, пата или повторения трех одинковых ходов. 
   
-  
 ## Как выглядит:
 ![Image of Yaktocat](imgs/board-example.jpg)
   
@@ -19,6 +18,8 @@ d7-d6
 d2-d4
 ```
 
+## Live demo:  
+[@chess_zugzwang_bot](t.me/chess_zugzwang_bot)
 
 ## Используемые библиотеки:  
 * [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api)
