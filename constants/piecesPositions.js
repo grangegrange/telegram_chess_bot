@@ -1,5 +1,6 @@
 const utils = require('../functions/utils')
 
+
 const pawnEvalWhite =
     [
         [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
