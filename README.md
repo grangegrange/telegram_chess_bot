@@ -21,6 +21,41 @@ d2-d4
 ## Live demo:  
 [@chess_zugzwang_bot](https://t.me/chess_zugzwang_bot)
 
+## Установка
+
+Это простое node.js-приложение, процесс установки стандартный.
+
+Склонируйте репозиторий:
+```
+git clone https://github.com/grangegrange/telegram_chess_bot.git
+```    
+
+Перейдите в директорию с проектом:
+```
+cd telegram_chess_bot/
+```
+  
+Установите зависимости:
+```
+npm i
+```
+
+Создайте своего телеграм-бота командой `/newbot` в родительском боте телеграма: [@BotFather](https://telegram.me/BotFather). Создайте в корневом разделе проекта файл `.env` и запишите в него полученный токен телеграм-бота:
+```
+TOKEN=123456789:AAEKfs...Dj38g
+```
+
+Запустите приложение:
+```
+npm run start
+```
+
+Для отслеживания изменений в `.js` файлах:
+```
+npm run watch
+```
+
+
 ## Используемые библиотеки:  
 * [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api)
 * [chess.js](https://github.com/jhlywa/chess.js)
