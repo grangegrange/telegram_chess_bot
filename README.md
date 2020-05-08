@@ -6,22 +6,8 @@
   
 ## Как выглядит:
 ![Image of Yaktocat](imgs/board-example.jpg)
-  
-  
-## Доступные нотации:
-Бот принимает ходы по классической нотации с указанием начального и конечного поля играющей фигуры.  
-  
-Пример:  
-```
-e2-e4
-d7-d6
-d2-d4
-```
 
-## Live demo:  
-[@chess_zugzwang_bot](https://t.me/chess_zugzwang_bot)
-
-## Установка
+## Установка:
 
 Это простое node.js-приложение, процесс установки стандартный.
 
@@ -55,6 +41,20 @@ npm run start
 npm run watch
 ```
 
+  
+  
+## Доступные нотации:
+Бот принимает ходы по классической нотации с указанием начального и конечного поля играющей фигуры.  
+  
+Пример:  
+```
+e2-e4
+d7-d6
+d2-d4
+```
+
+## Live demo:  
+[@chess_zugzwang_bot](https://t.me/chess_zugzwang_bot)
 
 ## Используемые библиотеки:  
 * [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api)
